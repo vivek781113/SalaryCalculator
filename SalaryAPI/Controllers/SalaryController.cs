@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using SalaryAPI.Dto;
 using SalaryAPI.Dtos;
+using System.Globalization;
 using TaxSlab;
 
 namespace SalaryAPI.Controllers
@@ -40,7 +41,7 @@ namespace SalaryAPI.Controllers
                 userSalaryDtos[j++] = new UserSalaryDto
                 {
                     Name = $"{input.FirstName} {input.LastName}",
-                    PayPeriod = $"{input.PayPeriod}",
+                    PayPeriod = $"{GetPayPeriod(input.PayPeriod)}",
                     GrossIncome = cs.NetMonthly,
                     IncomeTax = cs.NetTax,
                     NetIncome = cs.NetAnnual,
@@ -50,6 +51,18 @@ namespace SalaryAPI.Controllers
 
             _logger.LogInformation($"SalaryController: compute() Exit");
             return Ok(userSalaryDtos);
+        }
+
+        static string GetPayPeriod(string payperiod) 
+        {
+            if (DateTime.TryParseExact(payperiod, "MMMM", CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime period))
+            {
+                int lastDay = DateTime.DaysInMonth(period.Year, period.Month);
+                return $"01 {payperiod} - {lastDay} {payperiod}";
+            }
+
+
+            return "";
         }
     }
 }
