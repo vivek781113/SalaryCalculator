@@ -25,6 +25,8 @@ namespace SalaryAPI.Controllers
         [HttpPost("compute")]
         public ActionResult<UserSalaryDto[]> Post([FromBody] UserInputDto[] userInputs)
         {
+            _logger.LogInformation($"SalaryController: compute() In");
+            throw new Exception("testing middleware");
             var slab = _slabService.GetTaxSlabs();
             var salaries = userInputs.Select(input => input.AnnualSalary).ToArray();
             var computedSalary = _computeService.ComputeSalary(slab, salaries);
@@ -47,6 +49,7 @@ namespace SalaryAPI.Controllers
                 };
             }
 
+            _logger.LogInformation($"SalaryController: compute() Exit");
             return Ok(userSalaryDtos);
         }
     }

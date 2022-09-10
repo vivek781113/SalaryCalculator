@@ -1,4 +1,5 @@
 using ComputeService;
+using SalaryAPI.Middlewares;
 using Serilog;
 using TaxSlab;
 
@@ -30,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

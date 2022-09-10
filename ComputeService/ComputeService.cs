@@ -1,16 +1,25 @@
-﻿using Models;
+﻿using Microsoft.Extensions.Logging;
+using Models;
 
 namespace ComputeService
 {
     public class ComputeService : IComputeService
     {
+        private readonly ILogger<ComputeService> _logger;
+
+        public ComputeService(ILogger<ComputeService> logger)
+        {
+            _logger = logger;
+        }
         public Dictionary<double, ComputedSalary> ComputeSalary(Slab slab, double[] salaries)
         {
+            _logger.LogInformation($"ComputeService: ComputSalary() In.");
             Dictionary<double, ComputedSalary> computedSalaries = new();
             foreach (double sal in salaries)
                 if (!computedSalaries.ContainsKey(sal)) 
                     computedSalaries[sal] = ComputeSingle(slab, sal);
 
+            _logger.LogInformation($"ComputeService: ComputSalary() Exit.");
             return computedSalaries;
         }
 
