@@ -2,7 +2,6 @@
 {
     public class UserSalaryDto
     {
-        //Output (name, pay period, gross income, income tax, net income, super):
         public string Name { get; set; }
         public string PayPeriod { get; set; }
         public double GrossIncome { get; set; }

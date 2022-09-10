@@ -6,7 +6,6 @@ using TaxSlab;
 var builder = WebApplication.CreateBuilder(args);
 
 //logger configuration
-// Add services to the container.
 var logger = new LoggerConfiguration()
   .ReadFrom.Configuration(builder.Configuration)
   .Enrich.FromLogContext()
