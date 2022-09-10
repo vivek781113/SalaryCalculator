@@ -1,7 +1,17 @@
 using ComputeService;
+using Serilog;
 using TaxSlab;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//logger configuration
+// Add services to the container.
+var logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(builder.Configuration)
+  .Enrich.FromLogContext()
+  .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
 builder.Services.AddSingleton<ITaxSlabService, TaxSlabService>();

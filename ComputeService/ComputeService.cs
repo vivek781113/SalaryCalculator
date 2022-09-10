@@ -4,14 +4,22 @@ namespace ComputeService
 {
     public class ComputeService : IComputeService
     {
-        //TODO -- MAKE SLAB IN CONSTRUCTOR
-        static ComputedSalary ComputeSingle(Slab slab ,double salary)
+        public Dictionary<double, ComputedSalary> ComputeSalary(Slab slab, double[] salaries)
+        {
+            Dictionary<double, ComputedSalary> computedSalaries = new();
+            foreach (double sal in salaries)
+                if (!computedSalaries.ContainsKey(sal)) 
+                    computedSalaries[sal] = ComputeSingle(slab, sal);
+
+            return computedSalaries;
+        }
+
+        static ComputedSalary ComputeSingle(Slab slab, double salary)
         {
             double sal = salary, netTax = 0, lastRate = slab.FinalRate;
-            int i = 0;
             var slabs = slab.Brackets;
-            int n = slabs.Length;
-            
+            int n = slabs.Length, i = 0;
+
             while (sal > 0 && i < n)
             {
                 var slabBracket = slabs[i++];
@@ -38,14 +46,5 @@ namespace ComputeService
             };
         }
 
-        public Dictionary<double, ComputedSalary> ComputeSalary(Slab slab, double[] salaries)
-        {
-            Dictionary<double, ComputedSalary> computedSalaries = new();
-            foreach (double sal in salaries)
-                if (!computedSalaries.ContainsKey(sal)) 
-                    computedSalaries[sal] = ComputeSingle(slab, sal);
-
-            return computedSalaries;
-        }
     }
 }

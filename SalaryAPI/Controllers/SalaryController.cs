@@ -11,11 +11,13 @@ namespace SalaryAPI.Controllers
     [ApiController]
     public class SalaryController : ControllerBase
     {
+        private readonly ILogger<SalaryController> _logger;
         private readonly ITaxSlabService _slabService;
         private readonly IComputeService _computeService;
 
-        public SalaryController(ITaxSlabService slabService, IComputeService computeService)
+        public SalaryController(ILogger<SalaryController> logger, ITaxSlabService slabService, IComputeService computeService)
         {
+            _logger = logger;
             _slabService = slabService;
             _computeService = computeService;
         }
@@ -28,19 +30,20 @@ namespace SalaryAPI.Controllers
             var computedSalary = _computeService.ComputeSalary(slab, salaries);
 
             int len = userInputs.Length, j = 0;
+
             var userSalaryDtos = new UserSalaryDto[len];
-            for (int i = 0; i < userInputs.Length; i++)
+            
+            foreach (UserInputDto input in userInputs)
             {
-                UserInputDto uid = userInputs[i];
-                ComputedSalary cs = computedSalary[uid.AnnualSalary];
+                ComputedSalary cs = computedSalary[input.AnnualSalary];
                 userSalaryDtos[j++] = new UserSalaryDto
                 {
-                    Name = $"{uid.FirstName} {uid.LastName}",
-                    PayPeriod = $"{uid.PayPeriod}",
+                    Name = $"{input.FirstName} {input.LastName}",
+                    PayPeriod = $"{input.PayPeriod}",
                     GrossIncome = cs.NetMonthly,
                     IncomeTax = cs.NetTax,
                     NetIncome = cs.NetAnnual,
-                    Super = Math.Round(cs.NetMonthly * uid.SuperRate / 100, 2)
+                    Super = Math.Round(cs.NetMonthly * input.SuperRate / 100, 2)
                 };
             }
 
