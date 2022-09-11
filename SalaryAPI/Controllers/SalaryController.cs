@@ -38,10 +38,16 @@ namespace SalaryAPI.Controllers
             foreach (UserInputDto input in userInputs)
             {
                 ComputedSalary cs = computedSalary[input.AnnualSalary];
+                
+                var firstNdLastDay = GetPayPeriod(input.PayPeriod);
+
+                if (firstNdLastDay is null)
+                    return BadRequest("Please specify the pay period correctly");
+
                 userSalaryDtos[j++] = new UserSalaryDto
                 {
                     Name = $"{input.FirstName} {input.LastName}",
-                    PayPeriod = $"{GetPayPeriod(input.PayPeriod)}",
+                    PayPeriod = firstNdLastDay,
                     GrossIncome = cs.NetMonthly,
                     IncomeTax = cs.NetTax,
                     NetIncome = cs.NetAnnual,
@@ -53,7 +59,7 @@ namespace SalaryAPI.Controllers
             return Ok(userSalaryDtos);
         }
 
-        static string GetPayPeriod(string payperiod) 
+        static string? GetPayPeriod(string payperiod) 
         {
             if (DateTime.TryParseExact(payperiod, "MMMM", CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime period))
             {
@@ -62,7 +68,7 @@ namespace SalaryAPI.Controllers
             }
 
 
-            return "";
+            return null;
         }
     }
 }

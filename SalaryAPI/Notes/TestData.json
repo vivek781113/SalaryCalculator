@@ -1,0 +1,38 @@
+﻿[
+	{
+		"annualSalary": 60050,
+		"firstName": "John",
+		"lastName": "Smith",
+		"payPeriod": "March",
+		"superRate": 9
+	},
+
+	{
+		"annualSalary": 120000,
+		"firstName": "Alex",
+		"lastName": "Wong",
+		"payPeriod": "March",
+		"superRate": 10
+	},
+	{
+		"annualSalary": 170000,
+		"firstName": "Steve",
+		"lastName": "Rogers",
+		"payPeriod": "April",
+		"superRate": 2
+	},
+	{
+		"annualSalary": 181000,
+		"firstName": "Tony",
+		"lastName": "Stark",
+		"payPeriod": "June",
+		"superRate": 10
+	},
+	{
+		"annualSalary": 210000,
+		"firstName": "Shang",
+		"lastName": "Chi",
+		"payPeriod": "February",
+		"superRate": 8
+	}
+]

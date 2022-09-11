@@ -26,7 +26,7 @@ namespace ComputeService
             catch (Exception ex)
             {
                 _logger.LogError($"Error -> ComputeService: ComputSalary()\nErrorMessage: {ex.Message}\nInnerEx: {ex.InnerException?.Message}\nStackTrack:{ex.StackTrace}");
-                throw ex;
+                throw;
             }
         }
         static ComputedSalary ComputeSingle(Slab slab, double salary)

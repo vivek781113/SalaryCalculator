@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Notes\TestData.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
@@ -18,6 +22,10 @@
 
   <ItemGroup>
     <Folder Include="Filters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Notes\TestData.json" />
   </ItemGroup>
 
 </Project>
